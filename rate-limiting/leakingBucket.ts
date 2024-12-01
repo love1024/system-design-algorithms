@@ -1,6 +1,4 @@
-import { RateLimiter } from "./ratelimiter";
-
-export class LeakingBucket implements RateLimiter {
+export class LeakingBucket {
   bucketSize: number; // Maximum bucket size allowed
   outflowRate: number; // How many requests are processed in a second
   currentSize = 0; // Current requests in the queue
@@ -11,7 +9,7 @@ export class LeakingBucket implements RateLimiter {
     this.outflowRate = outflowRate;
   }
 
-  acquireTokens(tokens = 1): boolean {
+  tryAdd(tokens = 1): boolean {
     // First check, how many requests are processed from the last request
     this.leak();
 
@@ -35,9 +33,9 @@ export class LeakingBucket implements RateLimiter {
 }
 
 const leakingBucket = new LeakingBucket(4, 2);
-console.log(leakingBucket.acquireTokens());
-console.log(leakingBucket.acquireTokens());
-console.log(leakingBucket.acquireTokens());
-console.log(leakingBucket.acquireTokens());
-console.log(leakingBucket.acquireTokens());
-setInterval(() => console.log(leakingBucket.acquireTokens()), 300);
+console.log(leakingBucket.tryAdd());
+console.log(leakingBucket.tryAdd());
+console.log(leakingBucket.tryAdd());
+console.log(leakingBucket.tryAdd());
+console.log(leakingBucket.tryAdd());
+setInterval(() => console.log(leakingBucket.tryAdd()), 300);

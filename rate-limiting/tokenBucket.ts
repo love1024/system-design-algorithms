@@ -1,9 +1,7 @@
-import { RateLimiter } from "./ratelimiter";
-
 /**
  * Token Bucket Algorithm
  */
-export class TokenBucket implements RateLimiter {
+export class TokenBucket {
   bucketSize: number; // Maximum token the bucket can hold
   refillRate: number; // Number of tokens to add per second
   tokensLeft = 0; // Tokens left in the bucket
