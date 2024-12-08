@@ -9,8 +9,8 @@ export class FixedWindowCounter {
     this.windowSize = windowSizeInSeconds;
   }
 
-  processRequests(requests = 1) {
-    this.updateWindowCounter(requests);
+  processRequests() {
+    this.updateWindowCounter();
     if (this.counter > this.maximumRequests) {
       return false;
     }
@@ -18,12 +18,12 @@ export class FixedWindowCounter {
     return true;
   }
 
-  private updateWindowCounter(requests: number): void {
+  private updateWindowCounter(): void {
     const now = new Date().getTime();
     // Calculate window end, and see if the current request lies within the window or after that
     const windowEnd = this.windowStart + 1000 * this.windowSize;
     if (now < windowEnd) {
-      this.counter += requests;
+      this.counter += 1;
     } else {
       this.windowStart = now;
       this.counter = 0;
