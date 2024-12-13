@@ -11,7 +11,7 @@ export class UrlShortener {
     private charMap = '01234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIZKLMNOPQRSTUVWXYZ';
     
     shorten(url: string): string {
-        const hash = this.convertToBase62(url);
+        const hash = this.getBase62hash();
         this.cache.set(hash, url);
 
         return hash;
@@ -21,7 +21,7 @@ export class UrlShortener {
         return this.cache.get(short) ?? null;
     }
 
-    private convertToBase62(url: string): string {
+    private getBase62hash(): string {
         let uniqueid = this.idGenerator.generate();
         let base62Value = '';
         while(uniqueid > 0n) {
