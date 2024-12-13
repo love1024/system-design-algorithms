@@ -1,9 +1,9 @@
 export class Snowflake {
-    dataCeterId: number;
-    nodeId: number;
-    epoch: number;
-    sequence = 0;
-    lastTimestamp = -1; // Last millisecond timestamp
+    private dataCeterId: number;
+    private nodeId: number;
+    private epoch: number;
+    private sequence = 0;
+    private lastTimestamp = -1; // Last millisecond timestamp
     constructor(dataCeterId: number, nodeId: number, epoch = 1672531200000) {
         // validate nodeId and dataCeterId to be not more than 5 bits
         if(nodeId < 0 || nodeId > 31) {
@@ -17,7 +17,7 @@ export class Snowflake {
         this.epoch = epoch;
     }
 
-    generate(): string {
+    generate(): bigint {
         let now = Date.now();
         if(now < this.lastTimestamp) {
             throw new Error('Clock moved backwards, Cannot generate new ID');
@@ -46,11 +46,11 @@ export class Snowflake {
         (BigInt(this.nodeId) << (64n - 41n - 10n)) |  // 5 bits machine ID
         (BigInt(this.sequence)); // 12 bits sequence
 
-        return id.toString();
+        return id;
     }
 }
 
-const snowflake = new Snowflake(1, 1);
-for(let i = 0; i < 10; i++) {
-    console.log(snowflake.generate());
-}
+// const snowflake = new Snowflake(1, 1);
+// for(let i = 0; i < 10; i++) {
+//     console.log(snowflake.generate());
+// }
