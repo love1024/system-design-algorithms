@@ -51,13 +51,13 @@ export class Cache {
             }
         }
 
-        this.print();
+        // this.print();
     }
 
     get(key: string): unknown {
         const node = this.map.get(key);
         if(!node) {
-            console.warn(`${key} is not found.`);
+            console.warn(`${key} is not found in the cache.`);
             return null;
         }
 
@@ -67,7 +67,7 @@ export class Cache {
         // Add it at the end
         this.addToEnd(node);
 
-        this.print();
+        // this.print();
         return node.val;
     }
 
@@ -102,10 +102,10 @@ export class Cache {
     }
 }
 
-const cache = new Cache(3);
-cache.put('a', 1);
-cache.put('b', 2);
-cache.put('c', 3);
-console.log(cache.get('a'));
-cache.put('d', 4);
-console.log(cache.get('b'));
+// const cache = new Cache(3);
+// cache.put('a', 1);
+// cache.put('b', 2);
+// cache.put('c', 3);
+// console.log(cache.get('a'));
+// cache.put('d', 4);
+// console.log(cache.get('b'));
